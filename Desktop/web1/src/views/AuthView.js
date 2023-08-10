@@ -169,18 +169,28 @@ export default class AuthView extends React.Component {
         loginMechanisms={["email"]}
         variation="modal"
       >
-        
-        {({ signOut, user }) => (
-          <main className="auth-view-container"> {/* Apply styling using a CSS class */}
-            <h1 className="auth-view-header">Hello {user.username}</h1> {/* Apply styling to the header */}
-            <div className="auth-buttons">
-              
-              <Button onClick={() => window.location.href = "index.html"} className="auth-button">서비스 이용</Button>
-              <Button onClick={signOut} className="auth-button">Sign out</Button> {/* Apply styling to the buttons */}
-            </div>
-          </main>
-        )}
+        {({ signOut, user }) => {
+          if (user) {
+            // 사용자가 로그인한 경우, 바로 index.html로 이동
+            window.location.href = "index.html";
+            return null;  // 리디렉션 후에는 렌더링할 컴포넌트가 없으므로 null을 반환합니다.
+          }
+  
+          return (
+            <main className="auth-view-container">
+              <h1 className="auth-view-header">Hello</h1>
+              <div className="auth-buttons">
+                <Button onClick={() => window.location.href = "index.html"} className="auth-button">서비스 이용</Button>
+                <Button onClick={signOut} className="auth-button">Sign out</Button>
+              </div>
+            </main>
+          );
+        }}
       </Authenticator>
     );
   }
 }
+
+
+
+
